@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Location on Google Map</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="map" allowfullscreen="" loading="lazy"></iframe>
+
+  <script>
+    // Check if GPS is available
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          
+          // Load Google Maps centered on user’s location
+          let mapURL = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+          document.getElementById("map").src = mapURL;
+        },
+        function (error) {
+          alert("Unable to fetch location. Please enable GPS.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  </script>
+</body>
+</html>
